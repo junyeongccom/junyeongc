@@ -7,12 +7,18 @@
 </head>
 <body>
     <h1>계산기 덧셈만 처리하는 인공지능</h1>
-    <form action="/plusanswer" method="post">
+    <form action="/calc" method="post">
         <input type="text"  id="num1" placeholder="첫번째 수" name="num1">
-        <span> + </span>
+        <input type="text" id="opcode" placeholder="연산자 택1 +,-,*,/" name="opcode">
         <input type="text" id="num2" placeholder="두번째 수" name="num2">
         <button type="submit" id="plus">결과보기</button>
     </form>
-    <h3>홈으로</h3>
+    
+    {% if result %}
+    <h2>{{num1}} {{opcode}} {{num2}} = {{result}} </h2>
+    {% endif %}
+
+    <h1><a href='/calc'>🧐다시 계산하기🧐</a></h1>
+    <h3><a href='/index'>홈으로</a></h3>
 </body>
 </html>
