@@ -1,10 +1,18 @@
-
 from flask import Flask, render_template, request, redirect, url_for
+from com.junyeongc.auth.login_controller import LoginController
+from com.junyeongc.auth.login_model import LoginModel
+from com.junyeongc.calculator.calc_controller import CalcController
+from com.junyeongc.calculator.calc_model import CalcModel
+
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template("auth/login.html")
+
+@app.route('/fail')
+def fail():
+    return render_template("auth/loginfail.html")
 
 @app.route('/index')
 def index():
@@ -48,19 +56,31 @@ def constructfinautoreport():
 def healthfinchat():
     return render_template("esg insight hub/finimpact/healthfinchat.html")
 
-@app.route('/login',methods=["POST"])
+@app.route('/login',methods=["POST","GET"])
 def login():
-    print("🎃로그인 알고리즘")
-    username = request.form.get('username')
-    password = request.form.get('password')
-    print("username:", username)
-    print("password:", password)
-    if username =='chun' and password == '1234':
-        print("😊로그인 성공") 
-        return redirect(url_for('index'))
+    if request.method == "POST":
+        print("😊POST방식으로 전송한 데이터😊")
+        username = request.form.get('username')
+        password = request.form.get('password')
+        print("username:", username)
+        print("password:", password)
+
+        login = LoginModel()
+        login.username = username
+        login.password = password
+
+        controller = LoginController()
+        resp: LoginModel = controller.getresult(login)
+   
+        print(f"{resp.username}, {resp.password}, {resp.result}") 
+        return redirect(url_for(login.result))
+    
     else: 
-        print("🤣로그인 실패")
-        return render_template("auth/loginfail.html")
+        print("😊get방식으로 전송한 데이터😊")
+        return redirect(url_for("/home"))
+    
+
+
 
     
 @app.route('/calc',methods=["POST", "GET"])
@@ -68,29 +88,53 @@ def calc():
     if request.method == "POST":
         print("😊post방식으로 전송한 데이터😊")
         print("🎃계산기 알고리즘🎃")
+        
         num1 = request.form.get('num1')
         opcode = request.form.get('opcode')
         num2 = request.form.get('num2')
         print("num1:", num1)
         print("num2:", num2)
         print("opcode:", opcode)
-        if opcode == '+':
-            result = int(num1) + int(num2)
-        elif opcode == '-':
-            result = int(num1) - int(num2)
-        elif opcode == '*':
-            result = int(num1) * int(num2)
-        elif opcode == '/':
-            result = int(num1) / int(num2)
-        else:
-            print("❗연산자 오류 발생❗")
-            result = "유효한 연산자가 아닙니다. (+, -, *, / 만 사용 가능)"
-            
-        print(num1, opcode, num2, "=", result)
-        return render_template("/calculator/calc.html", num1 = num1, opcode=opcode, num2 = num2, result = result)
+
+        calc = CalcModel()
+        calc.num1 = int(num1)
+        calc.num2 = int(num2)
+        calc.opcode = opcode
+        
+        controller = CalcController()
+        resp: CalcModel = controller.getresult(calc)
+        
+        print(f"{resp.num1}, {resp.opcode}, {resp.num2}, =, {resp.result}")
+        return render_template("/calculator/calc.html", num1 = resp.num1, opcode = resp.opcode, 
+                               num2 = resp.num2, result = resp.result)
     else: 
         print("😊get방식으로 전송한 데이터😊")
         return render_template("/calculator/calc.html")
+    
+@app.route('/discount', methods=["POST","GET"])
+def discount():
+    if request.method == "POST":
+        print("😊post방식으로 전송한 데이터😊")
+        print("🎃할인 적용🎃")
+        amount = request.form.get("amount")
+        print("amount:", amount)
+
+    else:
+        print("😊get방식으로 전송한 데이터😊")
+        return render_template("/calculator/discount.html")
+    
+@app.route('/gugudan', methods=["POST","GET"])
+def gugudan():
+    if request.method == "POST":
+        print("😊post방식으로 전송한 데이터😊")
+        print("🎃구구단 외우기🎃")
+        number = request.form.get("number")
+        print("number:", number)
+
+
+    else:
+        print("😊get방식으로 전송한 데이터😊")
+        return render_template("/calculator/gugudan.html")
 
 
 if __name__ == '__main__ ' :
