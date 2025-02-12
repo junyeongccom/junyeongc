@@ -8,7 +8,7 @@ class GradeModel:
     math: int
     society: int
     science: int
-    result: str #F학점점, D학점, C학점, B학점, A학점, A+학점
+    result: str #F학점, D학점, C학점, B학점, A학점
 
     @property
     def name(self) -> str:

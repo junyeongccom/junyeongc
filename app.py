@@ -183,6 +183,8 @@ def grade():
 
         render_html = '<h3>결과보기<h3>'
         render_html += f"{resp.name}님의 성적은 {resp.result}입니다"
+        print("이름:", resp.name)
+        print("성적:", resp.result)
 
         return render_template("/grade/grade.html", render_html = render_html)
 

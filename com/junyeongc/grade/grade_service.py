@@ -25,17 +25,18 @@ class GradeService:
         print("total:", total)
         print("average:", average)
 
-        if average > 90:
+        if average >= 90:
             result = "A학점입니다."
-        elif average > 80:
+        elif average >= 80:
             result = "B학점입니다."
-        elif average > 70:
+        elif average >= 70:
             result = "C학점입니다."
-        elif average > 60:
+        elif average >= 60:
             result = "D학점입니다."
         else:
             result = "F학점입니다."
-            return result
+
+        print("result:", result)
         
         grade.result = result
         grade.name = name
