@@ -17,23 +17,55 @@
 
         .container {
             background: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 15px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         h2 {
             color: #1e6eff;
-            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .notice {
+            background: #eef4ff;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #1e6eff;
+            text-align: left;
+        }
+
+        .notice h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        ul li {
+            font-size: 16px;
+            margin: 5px 0;
         }
 
         form {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 15px; 
         }
 
         input {
@@ -60,7 +92,6 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            margin-top: 15px;
             transition: background 0.3s;
         }
 
@@ -69,13 +100,10 @@
         }
 
         #result {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 18px;
             font-weight: bold;
             color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
     </style>
 </head>
@@ -84,13 +112,29 @@
     <div class="container">
         <h2>할인 계산기</h2>
 
-        <form id="discountForm" action="/discount" method="POST">
-            <label for="amount">금액을 입력하세요:</label>
-            <input type="number" id="amount" name="amount" placeholder="금액 입력 (원)" required>
-            <button type="submit">할인 적용</button>
+        <div class="notice">
+            <h3>📢 할인 정책 안내 📢</h3>
+            <p>고객님께서 입력하신 금액에 따라 아래와 같이 할인이 적용됩니다.</p>
+            <ul>
+                <li>💰 <strong>100,000원 이상</strong> → 10% 할인</li>
+                <li>💰 <strong>50,000원 이상</strong> → 5% 할인</li>
+                <li>💰 <strong>10,000원 이상</strong> → 3% 할인</li>
+                <li>💰 <strong>10,000원 미만</strong> → 1% 할인</li>
+            </ul>
+            <p>할인 금액은 자동으로 계산되며, 최종 결제 금액에서 차감됩니다.</p>
+            <p>항상 저희 서비스를 이용해 주셔서 감사합니다! 😊</p>
+        </div>
+
+        <form action="/discount" method="post">
+            <label for="amount">금액 입력 (원):</label>
+            <input type="number" id="amount" name="amount" placeholder="금액을 입력하세요">
+            <button type="submit">계산하기</button>
         </form>
 
-        <p id="result"></p>
+        {{ render_html | default('') | safe }}
+    
+        <h1><a href='/discount'>🧐다시 계산하기🧐</a></h1>
+        <h3><a href='/index'>홈으로</a></h3>
     </div>
 
 </body>

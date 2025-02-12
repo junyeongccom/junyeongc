@@ -84,12 +84,12 @@
         <h2>구구단 계산기</h2>
 
         <form id="gugudanForm" action="/gugudan" method="POST">
-            <label for="number">숫자를 입력하세요 (2~9):</label>
-            <input type="number" id="number" name="number" min="2" max="9" placeholder="2~9 입력" required>
+            <label for="number">숫자를 입력하세요:</label>
+            <input type="number" id="number" name="number" placeholder="숫자 입력" required>
             <button type="submit">계산하기</button>
         </form>
 
-        <p id="result"></p>
+        {{ render_html | default('') | safe }}
     </div>
 
 </body>

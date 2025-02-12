@@ -14,9 +14,7 @@
         <button type="submit" id="plus">결과보기</button>
     </form>
     
-    {% if result %}
-    <h2>{{num1}} {{opcode}} {{num2}} = {{result}} </h2>
-    {% endif %}
+    {{ render_html | default('') | safe }}
 
     <h1><a href='/calc'>🧐다시 계산하기🧐</a></h1>
     <h3><a href='/index'>홈으로</a></h3>

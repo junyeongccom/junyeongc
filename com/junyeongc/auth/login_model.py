@@ -9,7 +9,7 @@ class LoginModel:
 
 
     @property
-    def username(self) -> object:
+    def username(self) -> str:
         return self._username
 
     @username.setter
@@ -17,7 +17,7 @@ class LoginModel:
         self._username = username
 
     @property
-    def password(self) -> object:
+    def password(self) -> str:
         return self._password
 
     @password.setter
@@ -25,7 +25,7 @@ class LoginModel:
         self._password = password
     
     @property
-    def result(self) -> object:
+    def result(self) -> str:
         return self._result
 
     @result.setter
